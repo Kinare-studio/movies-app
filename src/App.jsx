@@ -11,14 +11,14 @@ const darkTheme = createTheme({
   },
 });
 
-export function App() {
+export default function App() {
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <Router>
+    <Router>
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
         <Header />
         <AppRoutes />
-      </Router>
-    </ThemeProvider>
+      </ThemeProvider>
+    </Router>
   );
 }
