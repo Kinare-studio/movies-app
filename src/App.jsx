@@ -11,7 +11,7 @@ const darkTheme = createTheme({
   },
 });
 
-export default function App() {
+export function App() {
   return (
     <Router>
       <ThemeProvider theme={darkTheme}>
