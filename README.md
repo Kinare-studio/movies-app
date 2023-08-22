@@ -1,6 +1,6 @@
-# MOVIES - APP
+# MOVIES - APP (Приложение для поиска фильмов)
+## DEPLOY LINK [https://movie-app-aston.netlify.app/]
 
-(Приложение для поиска фильмов)
 
 Реализованы следующие требования к функциональности:
 
@@ -31,4 +31,4 @@
 
 - [x] Настроен CI/CD
 
-# DEPLOY LINK [https://movie-app-aston.netlify.app/]
+
