@@ -3,7 +3,7 @@ import { SearchBar } from "../components/SearchBar";
 import { FilmList } from "../components/FilmList";
 import "../css/main.css";
 
-export function Home() {
+export default function Home() {
   return (
     <div className="home">
       <SearchBar />
