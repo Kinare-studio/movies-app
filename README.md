@@ -1,6 +1,6 @@
 # MOVIES - APP (Приложение для поиска фильмов)
 
-## <a href: "https://movie-app-aston.netlify.app/">DEPLOY LINK</a>
+## DEPLOY LINK [<a href="https://movie-app-aston.netlify.app/">MOVIES APP </a>]
 
 ### В проекте используется библиотека компонентов и набор утилит для создания интерфейсов на Material Design System от Google.
 
