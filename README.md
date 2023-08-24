@@ -19,7 +19,7 @@
 - [ ] Есть хотя бы один кастомный хук:
 - [ ] Хотя бы несколько компонентов используют PropTypes:
 - [ ] Поиск не должен триггерить много запросов к серверу:
-- [x] Есть применение lazy + Suspense: [<a href:"https://github.com/Kinare-studio/movies-app/blob/develop/src/routes/AppRoutes.jsx">AppRoutes</a>]
+- [x] Есть применение lazy + Suspense: [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/routes/AppRoutes.jsx">AppRoutes </a>]
 
 ### Redux
 
