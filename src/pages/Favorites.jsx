@@ -1,5 +1,5 @@
 import React from "react";
 
-export default function Favorities() {
+export default function Favorites() {
   return <div>избранное</div>;
 }
