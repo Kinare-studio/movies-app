@@ -1,4 +1,5 @@
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
 import { FilmCard } from "./FilmCard";
 import styles from "./FilmList.module.css";
 import { useFetchAllMoviesQuery } from "../api/MoviesApi";
@@ -12,13 +13,12 @@ export function FilmList() {
   const top20Movies = [...data.docs]
     .sort((a, b) => b.rating.kp - a.rating.kp)
     .slice(0, 20);
-  console.log("top20Movies", top20Movies[1].title);
 
   return (
     <div className={styles.list}>
       {top20Movies.map((movie) => (
         <FilmCard
-          key={movie.poster.url}
+          key={uuidv4()}
           img={movie.poster.url}
           title={movie.title}
           alt={movie.name}
