@@ -6,15 +6,9 @@
 
 .home {
     padding: 40px 70px; 
+    background-color: black;
 }
 
-.filmList {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content:space-between;
-    margin: 20px 0;
-}
-
-.mainTitle {
+.title {
     color: #FE6B8B;
 }

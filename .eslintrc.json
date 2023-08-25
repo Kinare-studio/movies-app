@@ -15,7 +15,7 @@
     "plugins": ["prettier"], 
     "rules": {
       "prettier/prettier": "error",
-      "no-console": "off", 
+      "no-console": "warn", 
       "import/prefer-default-export": "off", 
       "react/jsx-no-useless-fragment": "error", 
       "import/order": "error" 
