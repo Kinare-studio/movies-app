@@ -12,13 +12,14 @@ export function FilmList() {
 
   const top20Movies = [...data.docs]
     .sort((a, b) => b.rating.kp - a.rating.kp)
-    .slice(0, 20);
+    .slice(0, 20)
+    .map((movie) => ({ ...movie, key: uuidv4() }));
 
   return (
     <div className={styles.list}>
       {top20Movies.map((movie) => (
         <FilmCard
-          key={uuidv4()}
+          key={movie.key}
           img={movie.poster.url}
           title={movie.title}
           alt={movie.name}
