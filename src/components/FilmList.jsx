@@ -6,22 +6,21 @@ import { useFetchAllMoviesQuery } from "../api/MoviesApi";
 import { Preloader } from "./Preloader";
 
 export function FilmList() {
-  const { data, isLoading } = useFetchAllMoviesQuery({ year: 2023 });
+  const { data, isLoading } = useFetchAllMoviesQuery({ limit: 20 });
 
   if (isLoading) return <Preloader />;
 
   const top20Movies = [...data.docs]
     .sort((a, b) => b.rating.kp - a.rating.kp)
-    .slice(0, 20)
     .map((movie) => ({ ...movie, key: uuidv4() }));
 
   return (
     <div className={styles.list}>
       {top20Movies.map((movie) => (
         <FilmCard
+          id={movie.id}
           key={movie.key}
           img={movie.poster.url}
-          title={movie.title}
           alt={movie.name}
           name={movie.name}
           description={movie.description}

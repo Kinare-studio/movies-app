@@ -4,7 +4,7 @@ import styles from "./FilmCard.module.css";
 import { BtnFavor } from "./BtnFavor";
 import { BtnMore } from "./BtnMore";
 
-export function FilmCard({ img, alt, name, year, rating }) {
+export function FilmCard({ img, alt, name, year, rating, id }) {
   return (
     <div className={styles.container}>
       <div className={styles.photo}>
@@ -14,11 +14,9 @@ export function FilmCard({ img, alt, name, year, rating }) {
         <h3>{name}</h3>
         <div>Год выпуска: {year}</div>
         <div>Рейтинг: {rating}</div>
-        <div>Страна жанр Режиссер</div>
-        <div>В ролях:</div>
       </div>
       <div className={styles.btnContainer}>
-        <BtnMore />
+        <BtnMore id={id} />
         <BtnFavor />
       </div>
     </div>
@@ -31,4 +29,5 @@ FilmCard.propTypes = {
   name: PropTypes.string.isRequired,
   year: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
+  id: PropTypes.number.isRequired,
 };

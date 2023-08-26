@@ -35,15 +35,9 @@
     flex: 1;
     padding: 5px;
   }
-  
-  .content h4 {
-    margin: 0;
+
+  h3 {
     margin-bottom: 10px;
-  }
-  
-  .content strong {
-    display: block;
-    margin-top: 5px;
   }
   
   .btnContainer {
