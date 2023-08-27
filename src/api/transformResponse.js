@@ -7,14 +7,9 @@ export function toAllMovies(responseData) {
       return {
         id: item.id,
         poster: item.poster,
-        genres: item.genres,
         rating: item.rating,
         name: item.name,
-        shortDescription: item.shortDescription,
         year: item.year,
-        actors: item.name,
-        persons: item.persons,
-        countries: item.countries,
       };
     }),
   };
@@ -58,5 +53,22 @@ export function toMovieById(responseData) {
     actors,
     directors,
     countries,
+  };
+}
+
+export function toMovieByQuery(responseData) {
+  const { limit } = responseData;
+
+  return {
+    limit,
+    docs: responseData.docs.map((item) => {
+      return {
+        id: item.id,
+        poster: item.poster,
+        rating: item.rating,
+        name: item.name,
+        year: item.year,
+      };
+    }),
   };
 }

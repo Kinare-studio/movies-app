@@ -20,7 +20,7 @@ export default function Movie() {
   }, []);
 
   if (isError) {
-    return <p>Что-то пошло не так!</p>;
+    return <p>Oooops! Что-то пошло не так!</p>;
   }
 
   if (isLoading || !movie) {
@@ -69,7 +69,13 @@ export default function Movie() {
           </p>
 
           <p>
-            Бюджет: {movie.budget.value} {movie.budget.currency}
+            {movie.budget &&
+            movie.budget.value !== undefined &&
+            movie.budget.value !== null
+              ? `Бюджет: ${movie.budget.value.toLocaleString()} ${
+                  movie.budget.currency
+                }`
+              : " "}
           </p>
           <div className={styles.footer}>
             <BtnFavor />

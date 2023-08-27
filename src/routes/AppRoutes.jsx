@@ -22,6 +22,7 @@ export function AppRoutes() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/movie/:id" element={<Movie />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/search/movie/:id" element={<Movie />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/history" element={<History />} />
         <Route path="/404" element={<Page404 />} />

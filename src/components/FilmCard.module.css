@@ -1,16 +1,10 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
 .container {
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
     background-color: white;
     width: 250px;
     height: 420px;
+    margin-bottom: 20px;
   }
   
   .photo {
