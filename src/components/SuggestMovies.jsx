@@ -1,17 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 import styles from "./SuggestMovie.module.css";
 
 export function SuggestsMovies({ movies }) {
   return (
     <>
       {movies.slice(0, 5).map((item) => {
-        const key = uuidv4();
         return (
           <Link
-            key={key}
+            key={item.id}
             to={`movie/${item.id}`}
             style={{ textDecoration: "none" }}
           >

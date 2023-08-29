@@ -17,12 +17,12 @@ export default function Search() {
     limit: 10,
   });
 
-  const showPreloader = isLoading || isFetching;
-  const showResults = !showPreloader && movies?.docs;
+  const dataStatus = isLoading || isFetching;
+  const showResults = !dataStatus && movies?.docs;
 
   return (
     <>
-      {showPreloader && <Preloader />}
+      {dataStatus && <Preloader />}
       <div className={styles.mainContainer}>
         <main>
           <SearchBar />

@@ -35,6 +35,15 @@ export default function Movie() {
     backgroundImage: `url(${movie.poster.url})`,
   };
 
+  const budget =
+    movie.budget &&
+    movie.budget.value !== undefined &&
+    movie.budget.value !== null
+      ? `Бюджет: ${movie.budget.value.toLocaleString()} ${
+          movie.budget.currency
+        }`
+      : " ";
+
   return (
     <div className={styles.movieContainer}>
       <div className={styles.backgroundImage} style={backgroundImageStyle} />
@@ -68,15 +77,7 @@ export default function Movie() {
             </span>
           </p>
 
-          <p>
-            {movie.budget &&
-            movie.budget.value !== undefined &&
-            movie.budget.value !== null
-              ? `Бюджет: ${movie.budget.value.toLocaleString()} ${
-                  movie.budget.currency
-                }`
-              : " "}
-          </p>
+          <p>{budget}</p>
           <div className={styles.footer}>
             <BtnFavor />
           </div>
