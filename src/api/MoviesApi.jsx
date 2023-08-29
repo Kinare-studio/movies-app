@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { toMovieById, toAllMovies, toMovieByQuery } from "./transformResponse";
 
 const apiKey = process.env.REACT_APP_API_KEY;
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -14,11 +15,30 @@ export const moviesApi = createApi({
   }),
   endpoints: (builder) => ({
     fetchAllMovies: builder.query({
-      query: () => ({
+      query: ({ limit }) => ({
         url: "movie",
+        params: { limit },
       }),
+      transformResponse: toAllMovies,
+    }),
+    fetchMovieById: builder.query({
+      query: ({ movieId }) => ({
+        url: `movie/${movieId}`,
+      }),
+      transformResponse: toMovieById,
+    }),
+    fetchMovieByQuery: builder.query({
+      query: ({ limit, name }) => ({
+        url: "movie",
+        params: { limit, name },
+      }),
+      transformResponse: toMovieByQuery,
     }),
   }),
 });
 
-export const { useFetchAllMoviesQuery } = moviesApi;
+export const {
+  useFetchAllMoviesQuery,
+  useFetchMovieByIdQuery,
+  useFetchMovieByQueryQuery,
+} = moviesApi;

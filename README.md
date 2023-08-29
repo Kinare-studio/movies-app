@@ -12,13 +12,13 @@
 
 - [x] Функциональные компоненты c хуками в приоритете над классовыми
 - [ ] Разделение на умные и глупые компоненты
-- [x] Рендеринг списков: [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/routes/AppRoutes.jsx">AppRoutes </a>]
-- [ ] Реализована хотя бы одна форма:
+- [x] Рендеринг списков: [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/FilmList.jsx">FilmList </a>], [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/SuggestMovies.jsx">SuggestMovies </a>]
+- [x] Реализована хотя бы одна форма:[<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/SearchBar.jsx">SearchBar </a>]
 - [ ] Есть применение Контекст API:
 - [ ] Есть применение предохранителя:
-- [ ] Есть хотя бы один кастомный хук:
-- [x] Хотя бы несколько компонентов используют PropTypes: [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/FilmCard.jsx">FilmCard </a>]
-- [ ] Поиск не должен триггерить много запросов к серверу:
+- [x] Есть хотя бы один кастомный хук:[<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/hooks/useDebounce.jsx">useDebounce </a>], [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/hooks/useOutside.js">useOutside </a>]
+- [x] Хотя бы несколько компонентов используют PropTypes: [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/FilmCard.jsx">FilmCard </a>], [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/SuggestMovies.jsx">SuggestMovies </a>]
+- [x] Поиск не должен триггерить много запросов к серверу: [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/hooks/useDebounce.jsx">useDebounce </a>] используется в компоненте [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/SearchBar.jsx">SearchBar </a>]
 - [x] Есть применение lazy + Suspense: [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/routes/AppRoutes.jsx">AppRoutes </a>]
 
 ### Redux
@@ -27,7 +27,7 @@
 - [ ] Используем слайсы:
 - [ ] Есть хотя бы одна кастомная мидлвара:
 - [x] Используется RTK Query: [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/api/MoviesApi.jsx">MoviesApi </a>]
-- [ ] Используется Transforming Responses:
+- [x] Используется Transforming Responses: [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/api/transformResponse.js">transformResponse </a>]
 
 ## 2 уровень (необязательный)
 
