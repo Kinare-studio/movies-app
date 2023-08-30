@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -11,17 +13,41 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { ThemeProvider } from "@mui/material/styles";
 import { dark } from "@mui/material/styles/createPalette";
+import { useNavigate } from "react-router-dom";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const navigate = useNavigate();
+
+  const [registrationStatus, setRegistrationStatus] = useState("");
+
+  const [storedUsers, setStoredUsers] = useLocalStorage("users", []);
+
+  const onSubmit = (data) => {
+    const registeredUser = storedUsers.find(
+      (user) => user.email === data.email,
+    );
+    if (registeredUser) {
+      setRegistrationStatus(
+        `Пользователь с логином ${data.email} уже зарегистрирован`,
+      );
+    } else {
+      const newUser = { email: data.email, password: data.password };
+      setStoredUsers((prevUsers) => [...prevUsers, newUser]);
+      navigate("/");
+    }
   };
+
+  const emailErrorMessage =
+    errors.email && errors.email.type === "required"
+      ? "Это поле обязательно для заполнения."
+      : "Неправильный формат email.";
 
   return (
     <ThemeProvider theme={dark}>
@@ -43,37 +69,11 @@ export default function SignUp() {
           >
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" sx={{ marginBottom: 2 }}>
             Sign up
           </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid>
+          <form onSubmit={handleSubmit(onSubmit)} noValidate>
+            <Grid container spacing={3}>
               <Grid item xs={12}>
                 <TextField
                   required
@@ -82,7 +82,19 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  InputProps={{
+                    ...register("email", {
+                      required: true,
+                      pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    }),
+                  }}
+                  error={!!errors.email}
                 />
+                {errors.email && (
+                  <Typography variant="body2" color="error">
+                    {emailErrorMessage}
+                  </Typography>
+                )}
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -93,15 +105,23 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  InputProps={{ ...register("password", { required: true }) }}
+                  error={!!errors.password}
                 />
+                {errors.password && (
+                  <Typography variant="body2" color="error">
+                    Это поле обязательно для заполнения.
+                  </Typography>
+                )}
               </Grid>
             </Grid>
             <Button
+              id="btn"
               type="submit"
               fullWidth
               variant="contained"
               sx={{
-                mt: 3,
+                mt: 4,
                 mb: 2,
                 color: "white",
                 background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
@@ -109,14 +129,20 @@ export default function SignUp() {
             >
               Sign Up
             </Button>
+            {registrationStatus &&
+              !registrationStatus.includes("successfully") && (
+                <Typography variant="body2" color="error">
+                  {registrationStatus}
+                </Typography>
+              )}
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link sx={{ color: "#FE6B8B" }} href="/login" variant="body2">
-                  Already have an account? Log in
+                  Уже зарегистрированы?
                 </Link>
               </Grid>
             </Grid>
-          </Box>
+          </form>
         </Box>
       </Container>
     </ThemeProvider>
