@@ -12,8 +12,8 @@
 
 - [x] Функциональные компоненты c хуками в приоритете над классовыми
 - [x] Разделение на умные и глупые компоненты
-- Умные: [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/FilmList.jsx">FilmList </a>], [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/SuggestMovies.jsx">SuggestMovies </a>],[<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/SearchBar.jsx">SearchBar </a>] и т.д.
-- Глупые: [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/Header.jsx">Header </a>], [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/FilmCard.jsx">FilmCard </a>],[<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/Preloader.jsx">Preloader </a>] и т.д.
+- Умные: [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/pages/Signup.jsx">Signup </a>],[<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/FilmList.jsx">FilmList </a>], [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/SearchBar.jsx">SearchBar </a>] и т.д.
+- Глупые: [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/SuggestMovies.jsx">SuggestMovies </a>], [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/FilmCard.jsx">FilmCard </a>] и т.д.
 - [x] Рендеринг списков: [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/FilmList.jsx">FilmList </a>], [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/SuggestMovies.jsx">SuggestMovies </a>]
 - [x] Реализована хотя бы одна форма:[<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/SearchBar.jsx">SearchBar </a>], [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/pages/Login.jsx">Login </a>], [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/pages/Signup.jsx">Signup </a>]
 - [ ] Есть применение Контекст API:
