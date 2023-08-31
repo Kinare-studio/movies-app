@@ -1,6 +1,5 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -14,7 +13,9 @@ import Container from "@mui/material/Container";
 import { ThemeProvider } from "@mui/material/styles";
 import { dark } from "@mui/material/styles/createPalette";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import { setIsAuth } from "../redux/authSlice";
 
 export default function SignUp() {
   const {
@@ -29,6 +30,8 @@ export default function SignUp() {
 
   const [storedUsers, setStoredUsers] = useLocalStorage("users", []);
 
+  const dispatch = useDispatch();
+
   const onSubmit = (data) => {
     const registeredUser = storedUsers.find(
       (user) => user.email === data.email,
@@ -38,8 +41,8 @@ export default function SignUp() {
         `Пользователь с логином ${data.email} уже зарегистрирован`,
       );
     } else {
-      const newUser = { email: data.email, password: data.password };
-      setStoredUsers((prevUsers) => [...prevUsers, newUser]);
+      setStoredUsers((prevUsers) => [...prevUsers, data]);
+      dispatch(setIsAuth({ isAuth: true, username: data.firstname }));
       navigate("/");
     }
   };
@@ -48,6 +51,11 @@ export default function SignUp() {
     errors.email && errors.email.type === "required"
       ? "Это поле обязательно для заполнения."
       : "Неправильный формат email.";
+
+  const passwordErrorMessage =
+    errors.password && errors.password.type === "required"
+      ? "Это поле обязательно для заполнения."
+      : "Пароль должен содержать минимум 6 символов.";
 
   return (
     <ThemeProvider theme={dark}>
@@ -74,6 +82,26 @@ export default function SignUp() {
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="firstname"
+                  label="First Name"
+                  id="firstname"
+                  autoComplete="given-name"
+                  InputProps={{
+                    ...register("firstname", { required: true }),
+                  }}
+                  error={!!errors.firstname}
+                />
+                {errors.firstname && (
+                  <Typography variant="body2" color="error">
+                    Это поле обязательно для заполнения.
+                  </Typography>
+                )}
+              </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   required
@@ -105,12 +133,14 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                  InputProps={{ ...register("password", { required: true }) }}
+                  InputProps={{
+                    ...register("password", { required: true, minLength: 6 }),
+                  }}
                   error={!!errors.password}
                 />
                 {errors.password && (
                   <Typography variant="body2" color="error">
-                    Это поле обязательно для заполнения.
+                    {passwordErrorMessage}
                   </Typography>
                 )}
               </Grid>

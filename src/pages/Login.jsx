@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -11,10 +11,11 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { ThemeProvider } from "@mui/material/styles";
 import { dark } from "@mui/material/styles/createPalette";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import { setIsAuth } from "../redux/authSlice";
 
 export default function LogIn() {
   const {
@@ -29,6 +30,8 @@ export default function LogIn() {
 
   const [storedUsers] = useLocalStorage("users", []);
 
+  const dispatch = useDispatch();
+
   const onSubmit = (data) => {
     const { email, password } = data;
 
@@ -37,6 +40,7 @@ export default function LogIn() {
     );
 
     if (registeredUser) {
+      dispatch(setIsAuth({ isAuth: true, username: registeredUser.firstname }));
       navigate("/");
     } else {
       setLoginError(true);
