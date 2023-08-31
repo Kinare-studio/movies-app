@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import React from "react";
+import { useSelector } from "react-redux";
 import {
   AppBar,
   Button,
@@ -11,32 +12,42 @@ import {
 } from "@mui/material";
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
 
+import { PrivateHeader } from "./PrivateHeader";
+
 export function Header() {
+  const isAuthorized = useSelector((state) => state.auth.isAuth);
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar sx={{ marginX: "40px" }}>
-          <IconButton
-            component={Link}
-            to="/"
+    <AppBar position="static">
+      <Toolbar
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginX: "40px",
+        }}
+      >
+        <IconButton
+          component={Link}
+          to="/"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            marginRight: "20px",
+          }}
+        >
+          <Avatar
             sx={{
-              display: "flex",
-              alignItems: "center",
-              marginRight: "20px",
+              background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+              marginRight: "10px",
             }}
           >
-            <Avatar
-              sx={{
-                background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-                marginRight: "10px",
-              }}
-            >
-              <OndemandVideoIcon />
-            </Avatar>
-            <Typography variant="h6" component="div">
-              Movies App
-            </Typography>
-          </IconButton>
+            <OndemandVideoIcon />
+          </Avatar>
+          <Typography variant="h6" component="div">
+            Movies App
+          </Typography>
+        </IconButton>
+        {!isAuthorized ? (
           <Box sx={{ marginLeft: "auto" }}>
             <Button
               color="inherit"
@@ -46,21 +57,25 @@ export function Header() {
             >
               Log In
             </Button>
+            <Button
+              component={Link}
+              to="/signup"
+              sx={{
+                color: "white",
+                background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+                marginLeft: "10px",
+              }}
+              variant="contained"
+            >
+              Sign Up
+            </Button>
           </Box>
-          <Button
-            component={Link}
-            to="/signup"
-            sx={{
-              color: "white",
-              background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-              marginLeft: "10px",
-            }}
-            variant="contained"
-          >
-            Sign Up
-          </Button>
-        </Toolbar>
-      </AppBar>
-    </Box>
+        ) : (
+          <PrivateHeader />
+        )}
+      </Toolbar>
+    </AppBar>
   );
 }
+
+export default Header;
