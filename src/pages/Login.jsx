@@ -40,7 +40,7 @@ export default function LogIn() {
     );
 
     if (registeredUser) {
-      dispatch(setIsAuth(true));
+      dispatch(setIsAuth({ isAuth: true, username: registeredUser.firstname }));
       navigate("/");
     } else {
       setLoginError(true);

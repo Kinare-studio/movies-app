@@ -15,7 +15,7 @@ import { dark } from "@mui/material/styles/createPalette";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { setIsAuth, setUserName } from "../redux/authSlice";
+import { setIsAuth } from "../redux/authSlice";
 
 export default function SignUp() {
   const {
@@ -41,14 +41,8 @@ export default function SignUp() {
         `Пользователь с логином ${data.email} уже зарегистрирован`,
       );
     } else {
-      const newUser = {
-        firstname: data.firstname,
-        email: data.email,
-        password: data.password,
-      };
-      setStoredUsers((prevUsers) => [...prevUsers, newUser]);
-      dispatch(setIsAuth(true));
-      dispatch(setUserName(data.firstname));
+      setStoredUsers((prevUsers) => [...prevUsers, data]);
+      dispatch(setIsAuth({ isAuth: true, username: data.firstname }));
       navigate("/");
     }
   };

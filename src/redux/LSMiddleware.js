@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { setIsAuth, logoutUser, setUserName } from "./authSlice";
+import { setIsAuth, logoutUser } from "./authSlice";
 
 export const LSMiddleware = (store) => (next) => (action) => {
   const result = next(action);
@@ -11,7 +11,8 @@ export const LSMiddleware = (store) => (next) => (action) => {
       console.groupCollapsed("Вход в приложение:");
       console.log("1.", date);
       console.log("2. Выполнен ли вход:", store.getState().auth.isAuth);
-      console.log("3. auth state", store.getState().auth);
+      console.log("3. Установлено имя:", store.getState().auth.username);
+      console.log("4. auth state", store.getState().auth);
       console.groupEnd();
       break;
 
@@ -19,15 +20,6 @@ export const LSMiddleware = (store) => (next) => (action) => {
       console.groupCollapsed("Выход из приложения:");
       console.log("1.", date);
       console.log("2. Вышел из аккаунта:", store.getState().auth.isAuth);
-      console.log("3. auth state", store.getState().auth);
-      console.groupEnd();
-      break;
-
-    case setUserName.type:
-      localStorage.setItem("username", JSON.stringify(action.payload));
-      console.groupCollapsed("Установка имени пользователя:");
-      console.log("1.", date);
-      console.log("2. Установлено имя:", store.getState().auth.username);
       console.log("3. auth state", store.getState().auth);
       console.groupEnd();
       break;
