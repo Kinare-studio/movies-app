@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import { setIsAuth, logoutUser } from "./authSlice";
+import { addFavorite, removeFavorite } from "./favoritesSlice";
 
 export const LSMiddleware = (store) => (next) => (action) => {
   const result = next(action);
@@ -24,6 +25,23 @@ export const LSMiddleware = (store) => (next) => (action) => {
       console.groupEnd();
       break;
 
+    case addFavorite.type:
+      console.groupCollapsed("Добавление фильма в избранное:");
+      console.log("1.", date);
+      console.log("2. Фильм добавлен в избранное");
+      console.groupEnd();
+      break;
+
+    case removeFavorite.type:
+      localStorage.setItem(
+        "favorites",
+        JSON.stringify(store.getState().favorites.movies),
+      );
+      console.groupCollapsed("Удаление фильма из избранного:");
+      console.log("1.", date);
+      console.log("2. Фильм удален из избранного");
+      console.groupEnd();
+      break;
     default:
       break;
   }

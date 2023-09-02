@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authReducer from "./redux/authSlice";
+import favoritesReducer from "./redux/favoritesSlice";
 import { moviesApi } from "./api/MoviesApi";
 import { LSMiddleware } from "./redux/LSMiddleware";
 
 const rootReducers = combineReducers({
   auth: authReducer,
+  favorites: favoritesReducer,
   [moviesApi.reducerPath]: moviesApi.reducer,
 });
 
