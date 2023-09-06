@@ -1,37 +1,43 @@
-/* eslint-disable no-console */
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
-import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
-import { addFavorite, removeFavorite } from "../redux/favoritesSlice";
+import { usePersistentValue } from "../hooks/usePersistentValue";
+import { toggleFavoriteMovie } from "./utilities/toggleFavoriteMovies";
 
-export function BtnFavor({ movieId, movieData }) {
-  const [isFavorite, setIsFavorite] = useState(false);
+export function BtnFavor({ movieId }) {
   const isAuthorized = useSelector((state) => state.auth.isAuth);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [storedMovies, setStoredMovies] = usePersistentValue(
+    "favoriteMoviesId",
+    [],
+  );
+  const moviesKey = useSelector((state) => state.auth.email);
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const handleAddFavorite = () => {
-    dispatch(addFavorite({ movieId, movieData }));
+  const setIsFavoriteInLocalStorage = (value) => {
+    localStorage.setItem(`isFavorite_${movieId}`, value);
   };
 
-  const handleRemoveFavorite = () => {
-    dispatch(removeFavorite({ movieId }));
-  };
+  useEffect(() => {
+    const storedIsFavorite = localStorage.getItem(`isFavorite_${movieId}`);
+    if (storedIsFavorite) {
+      setIsFavorite(storedIsFavorite === "true");
+    }
+  }, [movieId]);
 
   const onClick = () => {
-    if (isAuthorized) {
-      if (isFavorite) {
-        handleRemoveFavorite();
-      } else {
-        handleAddFavorite();
-      }
-      setIsFavorite(!isFavorite);
-    } else {
-      navigate("/login");
-    }
+    toggleFavoriteMovie(
+      movieId,
+      moviesKey,
+      storedMovies,
+      setStoredMovies,
+      isFavorite,
+      (newIsFavorite) => {
+        setIsFavorite(newIsFavorite);
+        setIsFavoriteInLocalStorage(newIsFavorite.toString());
+      },
+    );
   };
 
   const buttonText = isFavorite ? "В избранном" : "В избранное";
@@ -48,7 +54,6 @@ export function BtnFavor({ movieId, movieData }) {
         fontSize: "10px",
         variant: "contained",
       };
-
   return (
     <div>
       {isAuthorized ? (
@@ -68,11 +73,4 @@ export function BtnFavor({ movieId, movieData }) {
 
 BtnFavor.propTypes = {
   movieId: PropTypes.string.isRequired,
-  movieData: PropTypes.shape({
-    img: PropTypes.string.isRequired,
-    alt: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    year: PropTypes.string.isRequired,
-    rating: PropTypes.string.isRequired,
-  }).isRequired,
 };

@@ -79,7 +79,7 @@ export default function Movie() {
 
           <p>{budget}</p>
           <div className={styles.footer}>
-            <BtnFavor movieId={movie.id} />
+            <BtnFavor movieId={String(movie.id)} />
           </div>
         </div>
       </div>

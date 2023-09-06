@@ -1,31 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Preloader } from "../components/Preloader";
+import { FavoriteCards } from "../components/FavoriteCards";
 import styles from "./Favorites.module.css";
-import { FilmCard } from "../components/FilmCard";
 
-export default function Favorites() {
+export default function FavoriteList() {
+  const [favoriteMovies, setFavoriteMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const username = useSelector((state) => state.auth.username);
-  const favoriteMovies = useSelector((state) => state.favorites.favoriteMovies);
-  const favoriteMoviesArray = Object.values(favoriteMovies);
+  const userEmail = useSelector((state) => state.auth.email);
+
+  useEffect(() => {
+    const favoriteMoviesData =
+      JSON.parse(localStorage.getItem("favoriteMoviesId")) || {};
+    const userFavorites = favoriteMoviesData[userEmail] || [];
+    setFavoriteMovies(userFavorites);
+    setIsLoading(false);
+  }, [userEmail]);
+
+  if (isLoading) return <Preloader />;
+
+  const favoriteMessage = favoriteMovies.length
+    ? `${username}, Вы добавили в избранное следующие фильмы:`
+    : `${username}, в вашем списке пока нет избранных фильмов`;
 
   return (
     <div className={styles.mainContainer}>
       <main>
-        <h3 style={{ color: "white" }}>
-          {username}, Вы добавили в избранное следующие фильмы:
-        </h3>
+        <h3 style={{ color: "white" }}>{favoriteMessage}</h3>
         <div className={styles.movieContainer}>
-          {favoriteMoviesArray.map((item) => (
-            <FilmCard
-              id={item.id}
-              key={item.id}
-              alt={item.name}
-              img={item.img}
-              name={item.name}
-              rating={item.rating}
-              description={item.description}
-              year={item.year}
-            />
+          {favoriteMovies.map((movieId) => (
+            <FavoriteCards key={movieId} movieId={String(movieId)} />
           ))}
         </div>
       </main>

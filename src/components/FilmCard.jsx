@@ -4,7 +4,7 @@ import styles from "./FilmCard.module.css";
 import { BtnFavor } from "./BtnFavor";
 import { BtnMore } from "./BtnMore";
 
-export function FilmCard({ img, alt, name, year, rating, id }) {
+export function FilmCard({ img, alt, name, year, rating, movieId }) {
   return (
     <div className={styles.container}>
       <div className={styles.photo}>
@@ -16,17 +16,8 @@ export function FilmCard({ img, alt, name, year, rating, id }) {
         <div>Рейтинг: {rating}</div>
       </div>
       <div className={styles.btnContainer}>
-        <BtnMore id={id} />
-        <BtnFavor
-          movieId={id}
-          movieData={{
-            img,
-            alt,
-            name,
-            year,
-            rating,
-          }}
-        />
+        <BtnMore movieId={String(movieId)} />
+        <BtnFavor movieId={String(movieId)} />
       </div>
     </div>
   );
@@ -38,5 +29,5 @@ FilmCard.propTypes = {
   name: PropTypes.string.isRequired,
   year: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
-  id: PropTypes.number.isRequired,
+  movieId: PropTypes.string.isRequired,
 };

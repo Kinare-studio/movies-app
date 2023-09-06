@@ -1,22 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState = {
+  isAuth: false,
+  username: "",
+  email: "",
+};
+
 export const authSlice = createSlice({
   name: "auth",
-  initialState: {
-    isAuth: false,
-    username: "",
-  },
+  initialState,
   reducers: {
     setIsAuth(state, action) {
-      const { isAuth, username } = action.payload;
+      const { isAuth, username, email } = action.payload;
       return {
         ...state,
         isAuth,
         username,
+        email,
       };
     },
-    logoutUser(state) {
-      return { ...state, isAuth: false };
+    logoutUser() {
+      return initialState;
     },
   },
 });
