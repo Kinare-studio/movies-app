@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { Preloader } from "../components/Preloader";
+import PrivateRoute from "../components/PrivateRoute";
 
 const importPage = (pageName) => lazy(() => import(`../pages/${pageName}`));
 
@@ -23,8 +24,12 @@ export function AppRoutes() {
         <Route path="/movie/:id" element={<Movie />} />
         <Route path="/search" element={<Search />} />
         <Route path="/search/movie/:id" element={<Movie />} />
-        <Route path="/favorites" element={<Favorites />} />
-        <Route path="/history" element={<History />} />
+
+        <Route element={<PrivateRoute />}>
+          <Route path="/history" element={<History />} />
+          <Route path="favorites" element={<Favorites />} />
+        </Route>
+
         <Route path="/404" element={<Page404 />} />
         <Route path="*" element={<Navigate to="/404" />} />
       </Routes>

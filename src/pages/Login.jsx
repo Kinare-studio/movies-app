@@ -14,7 +14,7 @@ import { dark } from "@mui/material/styles/createPalette";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useLocalStorage } from "../hooks/useLocalStorage";
+import { usePersistentValue } from "../hooks/usePersistentValue";
 import { setIsAuth } from "../redux/authSlice";
 
 export default function LogIn() {
@@ -28,7 +28,7 @@ export default function LogIn() {
 
   const [loginError, setLoginError] = useState(false);
 
-  const [storedUsers] = useLocalStorage("users", []);
+  const [storedUsers] = usePersistentValue("users", []);
 
   const dispatch = useDispatch();
 
@@ -40,7 +40,13 @@ export default function LogIn() {
     );
 
     if (registeredUser) {
-      dispatch(setIsAuth({ isAuth: true, username: registeredUser.firstname }));
+      dispatch(
+        setIsAuth({
+          isAuth: true,
+          username: registeredUser.firstname,
+          email: registeredUser.email,
+        }),
+      );
       navigate("/");
     } else {
       setLoginError(true);

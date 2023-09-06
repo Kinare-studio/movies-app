@@ -14,7 +14,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { dark } from "@mui/material/styles/createPalette";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useLocalStorage } from "../hooks/useLocalStorage";
+import { usePersistentValue } from "../hooks/usePersistentValue";
 import { setIsAuth } from "../redux/authSlice";
 
 export default function SignUp() {
@@ -28,7 +28,7 @@ export default function SignUp() {
 
   const [registrationStatus, setRegistrationStatus] = useState("");
 
-  const [storedUsers, setStoredUsers] = useLocalStorage("users", []);
+  const [storedUsers, setStoredUsers] = usePersistentValue("users", []);
 
   const dispatch = useDispatch();
 
@@ -42,7 +42,13 @@ export default function SignUp() {
       );
     } else {
       setStoredUsers((prevUsers) => [...prevUsers, data]);
-      dispatch(setIsAuth({ isAuth: true, username: data.firstname }));
+      dispatch(
+        setIsAuth({
+          isAuth: true,
+          username: data.firstname,
+          email: data.email,
+        }),
+      );
       navigate("/");
     }
   };

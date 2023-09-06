@@ -3,9 +3,9 @@ import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-export function BtnMore({ id }) {
+export function BtnMore({ movieId }) {
   return (
-    <Link to={`/movie/${id}`} style={{ textDecoration: "none" }}>
+    <Link to={`/movie/${movieId}`} style={{ textDecoration: "none" }}>
       <Button
         sx={{
           fontSize: "10px",
@@ -21,5 +21,5 @@ export function BtnMore({ id }) {
   );
 }
 BtnMore.propTypes = {
-  id: PropTypes.number.isRequired,
+  movieId: PropTypes.string.isRequired,
 };

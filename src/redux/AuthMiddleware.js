@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { setIsAuth, logoutUser } from "./authSlice";
 
-export const LSMiddleware = (store) => (next) => (action) => {
+export const AuthMiddleware = (store) => (next) => (action) => {
   const result = next(action);
   localStorage.setItem("reduxState", JSON.stringify(store.getState()));
   const date = new Date().toString();
@@ -22,6 +22,7 @@ export const LSMiddleware = (store) => (next) => (action) => {
       console.log("2. Вышел из аккаунта:", store.getState().auth.isAuth);
       console.log("3. auth state", store.getState().auth);
       console.groupEnd();
+      localStorage.removeItem("");
       break;
 
     default:
