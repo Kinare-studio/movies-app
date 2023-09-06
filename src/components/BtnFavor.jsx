@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { usePersistentValue } from "../hooks/usePersistentValue";
-import { toggleFavoriteMovie } from "./utilities/toggleFavoriteMovies";
+import { toggleFavoriteMovie } from "../utilities/toggleFavoriteMovies";
 
 export function BtnFavor({ movieId }) {
   const isAuthorized = useSelector((state) => state.auth.isAuth);

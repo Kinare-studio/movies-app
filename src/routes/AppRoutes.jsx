@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { Preloader } from "../components/Preloader";
+import PrivateRoute from "../components/PrivateRoute";
 
 const importPage = (pageName) => lazy(() => import(`../pages/${pageName}`));
 
@@ -15,7 +15,6 @@ const History = importPage("History");
 const Page404 = importPage("Page404");
 
 export function AppRoutes() {
-  const isAuthenticated = useSelector((state) => state.auth.isAuth);
   return (
     <Suspense fallback={<Preloader />}>
       <Routes>
@@ -26,20 +25,10 @@ export function AppRoutes() {
         <Route path="/search" element={<Search />} />
         <Route path="/search/movie/:id" element={<Movie />} />
 
-        {isAuthenticated ? (
-          <>
-            <Route path="/favorites" element={<Favorites />} />
-            <Route path="/history" element={<History />} />
-          </>
-        ) : (
-          <>
-            <Route path="/history" element={<Navigate to="/" />} />
-            <Route path="/favorites" element={<Navigate to="/" />} />
-          </>
-        )}
-
-        <Route path="/favorites" element={<Favorites />} />
-        <Route path="/history" element={<History />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/history" element={<History />} />
+          <Route path="favorites" element={<Favorites />} />
+        </Route>
 
         <Route path="/404" element={<Page404 />} />
         <Route path="*" element={<Navigate to="/404" />} />

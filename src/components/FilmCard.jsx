@@ -16,8 +16,8 @@ export function FilmCard({ img, alt, name, year, rating, movieId }) {
         <div>Рейтинг: {rating}</div>
       </div>
       <div className={styles.btnContainer}>
-        <BtnMore movieId={String(movieId)} />
-        <BtnFavor movieId={String(movieId)} />
+        <BtnMore movieId={movieId} />
+        <BtnFavor movieId={movieId} />
       </div>
     </div>
   );
