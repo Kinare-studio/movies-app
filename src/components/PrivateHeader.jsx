@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Button, Box } from "@mui/material";
@@ -7,14 +7,27 @@ import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import RestoreIcon from "@mui/icons-material/Restore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { logoutUser } from "../redux/authSlice";
+import { useColor } from "../context/ColorContext";
 
 export function PrivateHeader() {
   const dispatch = useDispatch();
+  const { color, setColor } = useColor();
+  const { pathname } = useLocation();
   const handleLogout = () => {
     dispatch(logoutUser());
   };
+
+  const handleColorChange = () => {
+    setColor("red");
+  };
+
   return (
-    <Box sx={{ display: "flex", alignItems: "center" }}>
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
       <BottomNavigation
         sx={{ marginLeft: "auto", backgroundColor: "transparent" }}
         value="recents"
@@ -29,9 +42,14 @@ export function PrivateHeader() {
         <BottomNavigationAction
           label="Favorites"
           value="favorites"
-          icon={<FavoriteIcon />}
+          icon={
+            <FavoriteIcon
+              style={{ color: pathname === "/favorites" && color }}
+            />
+          }
           component={Link}
           to="/favorites"
+          onClick={handleColorChange}
         />
       </BottomNavigation>
       <Button

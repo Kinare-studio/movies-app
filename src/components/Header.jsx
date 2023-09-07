@@ -13,6 +13,7 @@ import {
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
 
 import { PrivateHeader } from "./PrivateHeader";
+import { ColorProvider } from "../context/ColorContext";
 
 export function Header() {
   const isAuthorized = useSelector((state) => state.auth.isAuth);
@@ -71,7 +72,9 @@ export function Header() {
             </Button>
           </Box>
         ) : (
-          <PrivateHeader />
+          <ColorProvider>
+            <PrivateHeader />
+          </ColorProvider>
         )}
       </Toolbar>
     </AppBar>

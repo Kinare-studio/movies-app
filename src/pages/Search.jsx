@@ -35,7 +35,7 @@ export default function Search() {
               <div className={styles.movieContainer}>
                 {movies.docs.map((item) => (
                   <FilmCard
-                    id={item.id}
+                    movieId={String(item.id)}
                     key={item.id}
                     img={item.poster.url}
                     alt={item.name}
