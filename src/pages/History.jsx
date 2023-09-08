@@ -1,5 +1,10 @@
 import React from "react";
+import { SearchHistory } from "../components/SearchHistory";
 
 export default function History() {
-  return <div>история</div>;
+  return (
+    <div>
+      <SearchHistory />
+    </div>
+  );
 }

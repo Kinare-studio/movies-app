@@ -4,11 +4,13 @@ import { styled } from "@mui/system";
 import React, { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { moviesApi } from "../api/MoviesApi";
 import { useDebounce } from "../hooks/useDebounce";
 import { SuggestsMovies } from "./SuggestMovies";
 import { useOutside } from "../hooks/useOutside";
 import styles from "./SearchBar.module.css";
+import { usePersistentValue } from "../hooks/usePersistentValue";
 
 const RootPaper = styled(Paper)({
   display: "flex",
@@ -32,7 +34,7 @@ const SearchIconButton = styled(IconButton)({
 });
 
 export function SearchBar() {
-  const suggestsRef = useRef("");
+  const suggestsRef = useRef(null);
   const navigate = useNavigate();
   const { register, watch, handleSubmit } = useForm({
     defaultValues: {
@@ -40,10 +42,15 @@ export function SearchBar() {
     },
   });
   const { search } = watch();
-  const debouncedSearch = useDebounce(search, 400);
+  const debouncedSearch = useDebounce(search, 500);
   const [trigger, { data: movies }] = moviesApi.useLazyFetchMovieByQueryQuery();
 
   const [showSuggests, setShowSuggests] = useState(true);
+  const userHistory = useSelector((state) => state.auth.email);
+  const [searchHistory, setSearchHistory] = usePersistentValue(
+    "moviesHistory",
+    [],
+  );
 
   useEffect(() => {
     if (debouncedSearch !== undefined && debouncedSearch !== "") {
@@ -61,8 +68,20 @@ export function SearchBar() {
     setShowSuggests(true);
   };
 
+  const timestamp = new Date().getTime();
+
   const searchMovie = () => {
-    navigate(`/search?name=${debouncedSearch}`);
+    if (debouncedSearch !== "") {
+      const newHistory = {
+        ...searchHistory,
+        [userHistory]: [
+          ...(searchHistory[userHistory] || []),
+          { [timestamp]: debouncedSearch },
+        ],
+      };
+      setSearchHistory(newHistory);
+      navigate(`/search?name=${debouncedSearch}`);
+    }
   };
 
   return (

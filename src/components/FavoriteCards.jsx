@@ -7,7 +7,6 @@ import styles from "./FavoriteCards.module.css";
 
 export function FavoriteCards({ movieId }) {
   const { data: movieData, isLoading } = useFetchMovieByIdQuery({ movieId });
-
   if (isLoading) return <Preloader />;
 
   return (

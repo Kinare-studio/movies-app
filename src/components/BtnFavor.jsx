@@ -15,17 +15,6 @@ export function BtnFavor({ movieId }) {
   );
   const moviesKey = useSelector((state) => state.auth.email);
 
-  const setIsFavoriteInLocalStorage = (value) => {
-    localStorage.setItem(`isFavorite_${movieId}`, value);
-  };
-
-  useEffect(() => {
-    const storedIsFavorite = localStorage.getItem(`isFavorite_${movieId}`);
-    if (storedIsFavorite) {
-      setIsFavorite(storedIsFavorite === "true");
-    }
-  }, [movieId]);
-
   const onClick = () => {
     toggleFavoriteMovie(
       movieId,
@@ -35,10 +24,24 @@ export function BtnFavor({ movieId }) {
       isFavorite,
       (newIsFavorite) => {
         setIsFavorite(newIsFavorite);
-        setIsFavoriteInLocalStorage(newIsFavorite.toString());
       },
     );
   };
+
+  useEffect(() => {
+    const storedIsFavorite = localStorage.getItem(`isFavorite_${movieId}`);
+    if (storedIsFavorite) {
+      setIsFavorite(storedIsFavorite === "true");
+    }
+  }, [movieId, isFavorite]);
+
+  useEffect(() => {
+    const userEmail = moviesKey;
+    const userFavorites = storedMovies[userEmail] || [];
+    const isMovieFavorite = userFavorites.includes(movieId);
+
+    setIsFavorite(isMovieFavorite);
+  }, [movieId, storedMovies, moviesKey]);
 
   const buttonText = isFavorite ? "В избранном" : "В избранное";
   const buttonStyle = isFavorite
