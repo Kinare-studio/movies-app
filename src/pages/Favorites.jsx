@@ -10,6 +10,10 @@ export default function FavoriteList() {
   const username = useSelector((state) => state.auth.username);
   const userEmail = useSelector((state) => state.auth.email);
 
+  const removeFromPage = (movieId) => {
+    setFavoriteMovies((prev) => prev.filter((id) => id !== movieId));
+  };
+
   useEffect(() => {
     const favoriteMoviesData =
       JSON.parse(localStorage.getItem("favoriteMoviesId")) || {};
@@ -30,7 +34,11 @@ export default function FavoriteList() {
         <h3 style={{ color: "white" }}>{favoriteMessage}</h3>
         <div className={styles.movieContainer}>
           {favoriteMovies.map((movieId) => (
-            <FavoriteCards key={movieId} movieId={String(movieId)} />
+            <FavoriteCards
+              key={movieId}
+              movieId={String(movieId)}
+              removeFromPage={removeFromPage}
+            />
           ))}
         </div>
       </main>

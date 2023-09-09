@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import { usePersistentValue } from "../hooks/usePersistentValue";
 import { toggleFavoriteMovie } from "../utilities/toggleFavoriteMovies";
 
-export function BtnFavor({ movieId }) {
+export function BtnFavor({ movieId, removeFromPage }) {
   const isAuthorized = useSelector((state) => state.auth.isAuth);
   const [isFavorite, setIsFavorite] = useState(false);
   const [storedMovies, setStoredMovies] = usePersistentValue(
@@ -24,6 +24,9 @@ export function BtnFavor({ movieId }) {
       isFavorite,
       (newIsFavorite) => {
         setIsFavorite(newIsFavorite);
+        if (!newIsFavorite) {
+          removeFromPage(movieId); // добавила
+        }
       },
     );
   };
@@ -76,4 +79,5 @@ export function BtnFavor({ movieId }) {
 
 BtnFavor.propTypes = {
   movieId: PropTypes.string.isRequired,
+  removeFromPage: PropTypes.func.isRequired,
 };

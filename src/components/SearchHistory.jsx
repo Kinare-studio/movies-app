@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -31,7 +32,15 @@ export function SearchHistory() {
   const userSearches = searchArray.map((item) => Object.values(item)) || [];
 
   const clearHistoryItem = (search) => {
-    // eslint-disable-next-line no-console
+    const updatedMoviesHistory = { ...moviesHistory };
+
+    const updatedUserSearches = searchArray.filter(
+      (item) => Object.keys(item)[0].toString() !== search.toString(),
+    );
+    updatedMoviesHistory[userHistory] = updatedUserSearches;
+
+    localStorage.setItem("moviesHistory", JSON.stringify(updatedMoviesHistory));
+    setHistoryUpdated(!historyUpdated);
     console.log(`вы удалили ${search}`);
   };
 
@@ -40,8 +49,8 @@ export function SearchHistory() {
       <div className={styles.container}>
         <h3>История поиска</h3>
         <ul className={styles.itemsContainer}>
-          {userSearches.map((search) => (
-            <li key={keysOfSearches}>
+          {userSearches.map((search, index) => (
+            <li key={keysOfSearches[index]}>
               <a
                 className={styles.link}
                 href={`/search?name=${search}`}
@@ -55,7 +64,7 @@ export function SearchHistory() {
               <IconButton
                 aria-label="delete"
                 size="small"
-                onClick={() => clearHistoryItem(search)}
+                onClick={() => clearHistoryItem(keysOfSearches[index])}
               >
                 <DeleteIcon fontSize="inherit" />
               </IconButton>

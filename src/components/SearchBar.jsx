@@ -5,6 +5,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { v4 as uuid4 } from "uuid";
 import { moviesApi } from "../api/MoviesApi";
 import { useDebounce } from "../hooks/useDebounce";
 import { SuggestsMovies } from "./SuggestMovies";
@@ -68,15 +69,16 @@ export function SearchBar() {
     setShowSuggests(true);
   };
 
-  const timestamp = new Date().getTime();
+  const searchKey = uuid4();
 
   const searchMovie = () => {
     if (debouncedSearch !== "") {
+      const uniqueKey = `${searchKey}_${debouncedSearch}`;
       const newHistory = {
         ...searchHistory,
         [userHistory]: [
           ...(searchHistory[userHistory] || []),
-          { [timestamp]: debouncedSearch },
+          { [uniqueKey]: debouncedSearch },
         ],
       };
       setSearchHistory(newHistory);
