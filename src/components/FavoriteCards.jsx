@@ -5,9 +5,8 @@ import { useFetchMovieByIdQuery } from "../api/MoviesApi";
 import { Preloader } from "./Preloader";
 import styles from "./FavoriteCards.module.css";
 
-export function FavoriteCards({ movieId }) {
+export function FavoriteCards({ movieId, removeFromPage }) {
   const { data: movieData, isLoading } = useFetchMovieByIdQuery({ movieId });
-
   if (isLoading) return <Preloader />;
 
   return (
@@ -19,6 +18,7 @@ export function FavoriteCards({ movieId }) {
         year={movieData.year}
         rating={movieData.rating.kp}
         movieId={movieId}
+        removeFromPage={removeFromPage}
       />
     </div>
   );
@@ -26,4 +26,5 @@ export function FavoriteCards({ movieId }) {
 
 FavoriteCards.propTypes = {
   movieId: PropTypes.string.isRequired,
+  removeFromPage: PropTypes.func.isRequired,
 };

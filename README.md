@@ -8,7 +8,7 @@
 
 ## 1 уровень (необходимый минимум)
 
-- [x] Для хранения учетных записей пользователей используем LocalStorage.
+- [x] Для хранения учетных записей пользователей, их Избранного и Истории поиска, использую LocalStorage.
 
 ### React
 
@@ -18,7 +18,7 @@
 - Глупые: [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/SuggestMovies.jsx">SuggestMovies </a>], [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/FilmCard.jsx">FilmCard </a>] и т.д.
 - [x] Рендеринг списков: [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/FilmList.jsx">FilmList </a>], [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/SuggestMovies.jsx">SuggestMovies </a>]
 - [x] Реализована хотя бы одна форма:[<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/SearchBar.jsx">SearchBar </a>], [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/pages/Login.jsx">Login </a>], [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/pages/Signup.jsx">Signup </a>]
-- [ ] Есть применение Контекст API:
+- [x] Есть применение Контекст API: [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/context/ColorContext.jsx">ColorContext </a>]
 - [x] Есть применение предохранителя: [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/App.jsx">App </a>] пакет react-error-boundary;
 - [x] Есть хотя бы один кастомный хук:[<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/hooks/useDebounce.jsx">useDebounce </a>], [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/hooks/useOutside.js">useOutside </a>], [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/hooks/useLocalStorage.js">useLocalStorage </a>]
 - [x] Хотя бы несколько компонентов используют PropTypes: [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/FilmCard.jsx">FilmCard </a>], [<a href="https://github.com/Kinare-studio/movies-app/blob/develop/src/components/SuggestMovies.jsx">SuggestMovies </a>]

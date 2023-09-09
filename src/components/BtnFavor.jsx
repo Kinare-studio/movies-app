@@ -5,8 +5,9 @@ import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { usePersistentValue } from "../hooks/usePersistentValue";
 import { toggleFavoriteMovie } from "../utilities/toggleFavoriteMovies";
+import { getStoredIsFavorite } from "../utilities/getStoredIsFavorite";
 
-export function BtnFavor({ movieId }) {
+export function BtnFavor({ movieId, removeFromPage }) {
   const isAuthorized = useSelector((state) => state.auth.isAuth);
   const [isFavorite, setIsFavorite] = useState(false);
   const [storedMovies, setStoredMovies] = usePersistentValue(
@@ -14,17 +15,6 @@ export function BtnFavor({ movieId }) {
     [],
   );
   const moviesKey = useSelector((state) => state.auth.email);
-
-  const setIsFavoriteInLocalStorage = (value) => {
-    localStorage.setItem(`isFavorite_${movieId}`, value);
-  };
-
-  useEffect(() => {
-    const storedIsFavorite = localStorage.getItem(`isFavorite_${movieId}`);
-    if (storedIsFavorite) {
-      setIsFavorite(storedIsFavorite === "true");
-    }
-  }, [movieId]);
 
   const onClick = () => {
     toggleFavoriteMovie(
@@ -35,10 +25,27 @@ export function BtnFavor({ movieId }) {
       isFavorite,
       (newIsFavorite) => {
         setIsFavorite(newIsFavorite);
-        setIsFavoriteInLocalStorage(newIsFavorite.toString());
+        if (!newIsFavorite) {
+          removeFromPage(movieId);
+        }
       },
     );
   };
+
+  useEffect(() => {
+    const storedIsFavorite = getStoredIsFavorite(movieId);
+    if (storedIsFavorite) {
+      setIsFavorite(storedIsFavorite === "true");
+    }
+  }, [movieId, isFavorite]);
+
+  useEffect(() => {
+    const userEmail = moviesKey;
+    const userFavorites = storedMovies[userEmail] || [];
+    const isMovieFavorite = userFavorites.includes(movieId);
+
+    setIsFavorite(isMovieFavorite);
+  }, [movieId, storedMovies, moviesKey]);
 
   const buttonText = isFavorite ? "В избранном" : "В избранное";
   const buttonStyle = isFavorite
@@ -73,4 +80,8 @@ export function BtnFavor({ movieId }) {
 
 BtnFavor.propTypes = {
   movieId: PropTypes.string.isRequired,
+  removeFromPage: PropTypes.func,
+};
+BtnFavor.defaultProps = {
+  removeFromPage: () => {},
 };

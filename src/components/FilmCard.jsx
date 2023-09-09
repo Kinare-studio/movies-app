@@ -4,7 +4,15 @@ import styles from "./FilmCard.module.css";
 import { BtnFavor } from "./BtnFavor";
 import { BtnMore } from "./BtnMore";
 
-export function FilmCard({ img, alt, name, year, rating, movieId }) {
+export function FilmCard({
+  img,
+  alt,
+  name,
+  year,
+  rating,
+  movieId,
+  removeFromPage,
+}) {
   return (
     <div className={styles.container}>
       <div className={styles.photo}>
@@ -17,7 +25,7 @@ export function FilmCard({ img, alt, name, year, rating, movieId }) {
       </div>
       <div className={styles.btnContainer}>
         <BtnMore movieId={movieId} />
-        <BtnFavor movieId={movieId} />
+        <BtnFavor movieId={movieId} removeFromPage={removeFromPage} />
       </div>
     </div>
   );
@@ -30,4 +38,8 @@ FilmCard.propTypes = {
   year: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
   movieId: PropTypes.string.isRequired,
+  removeFromPage: PropTypes.func,
+};
+FilmCard.defaultProps = {
+  removeFromPage: () => {},
 };
