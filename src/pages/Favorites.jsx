@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Preloader } from "../components/Preloader";
 import { FavoriteCards } from "../components/FavoriteCards";
 import styles from "./Favorites.module.css";
+import { getFavoriteMoviesData } from "../utilities/getFavoriteMoviesData";
 
 export default function FavoriteList() {
   const [favoriteMovies, setFavoriteMovies] = useState([]);
@@ -15,8 +16,7 @@ export default function FavoriteList() {
   };
 
   useEffect(() => {
-    const favoriteMoviesData =
-      JSON.parse(localStorage.getItem("favoriteMoviesId")) || {};
+    const favoriteMoviesData = getFavoriteMoviesData();
     const userFavorites = favoriteMoviesData[userEmail] || [];
     setFavoriteMovies(userFavorites);
     setIsLoading(false);

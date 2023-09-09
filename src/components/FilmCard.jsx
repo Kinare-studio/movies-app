@@ -38,5 +38,8 @@ FilmCard.propTypes = {
   year: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
   movieId: PropTypes.string.isRequired,
-  removeFromPage: PropTypes.func.isRequired,
+  removeFromPage: PropTypes.func,
+};
+FilmCard.defaultProps = {
+  removeFromPage: () => {},
 };

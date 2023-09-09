@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { usePersistentValue } from "../hooks/usePersistentValue";
 import { toggleFavoriteMovie } from "../utilities/toggleFavoriteMovies";
+import { getStoredIsFavorite } from "../utilities/getStoredIsFavorite";
 
 export function BtnFavor({ movieId, removeFromPage }) {
   const isAuthorized = useSelector((state) => state.auth.isAuth);
@@ -25,14 +26,14 @@ export function BtnFavor({ movieId, removeFromPage }) {
       (newIsFavorite) => {
         setIsFavorite(newIsFavorite);
         if (!newIsFavorite) {
-          removeFromPage(movieId); // добавила
+          removeFromPage(movieId);
         }
       },
     );
   };
 
   useEffect(() => {
-    const storedIsFavorite = localStorage.getItem(`isFavorite_${movieId}`);
+    const storedIsFavorite = getStoredIsFavorite(movieId);
     if (storedIsFavorite) {
       setIsFavorite(storedIsFavorite === "true");
     }
@@ -79,5 +80,8 @@ export function BtnFavor({ movieId, removeFromPage }) {
 
 BtnFavor.propTypes = {
   movieId: PropTypes.string.isRequired,
-  removeFromPage: PropTypes.func.isRequired,
+  removeFromPage: PropTypes.func,
+};
+BtnFavor.defaultProps = {
+  removeFromPage: () => {},
 };
